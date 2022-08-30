@@ -160,3 +160,28 @@ div {
 
 
 // 반복문
+@for $i from 1 through 10 {
+  .box:nth-child(#{$i}) { // nth-child() 괄호 안의 부분은 원래 값을 넣는 곳이 아니므로 보간을 사용해서 값을 넣는다.
+    width: 100px * $i;
+  }
+}
+
+
+// 함수
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 화면 비율 등을 계산할 때 유용하다.
+@function ratio($size, $ratio) {
+  @return $size * $ratio
+}
+
+.box {
+  $width: 160px;
+  width: $width;
+  height: ratio($width, 9/16);
+  @include center;
+}
