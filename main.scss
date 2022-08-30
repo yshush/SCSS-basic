@@ -107,3 +107,56 @@ span {
 div {
   width: 100% - 200px;  // error -> calc함수 사용해햐 함
 }
+
+
+// 재활용(Mixins)
+// 재활용할 코드 앞에 @mixin 붙이고
+// 재활용해서 사용할 코드 앞에 @include를 붙여서 쓴다. 
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  @include center;
+  .item {
+    @include center;
+  }
+}
+.box {
+  @include center;
+}
+//---------------------------
+// 인수를 사용한 mixin, 인수에 기본값을 설정해주면 재활용 시 ()를 쓰지 않아도 됨
+@mixin box($size: 100px) {
+  width: $size;
+  height: $size;
+  background-color: tomato;
+}
+.container {
+  @include box(200px);
+  .item {
+    @include box;
+  }
+}
+.box {
+  @include box;
+}
+// 여러 개의 매개변수들을 가질 수 있다.
+@mixin box($size: 80px, $color: tomato) {
+  width: $size;
+  height: $size;
+  background-color: $color;
+}
+.container {
+  @include box(200px, red);
+  .item {
+    @include box($color: green);  // 키워드인수 -> 인수의 값이 매개변수로 직접 들어갈 수 있어 매개변수의 순서와 갯수를 일치시키지 않아도 된다.
+  }
+}
+.box {
+  @include box;
+}
+
+
+// 반복문
