@@ -3,5 +3,107 @@ $color: royalblue;
 .container {
   h1 {
     color: $color;
+    // SCSS에서의 주석은 CSS스타일과 js스타일 둘 다 제공하는데 컴파일 할때는 js스타일의 주석은 변환되지 않고 삭제된다.
+    // 따라서 변환된 후에도 주석을 남기고 싶으면 기존 CSS스타일 주석을 사용하도록 하자
+    /* background-color: orange; */
+    // font-size: 60px;
   }
+}
+
+.container {
+  > ul {  // 자식 선택자가 필요한 경우 > 을 붙인다.
+    li {
+      font-size: 40px;
+      .name {
+        color: royalblue;
+      }
+      .age {
+        color: orange;
+      }
+    }
+  }
+}
+
+
+// & - 상위 선택자 참조
+.btn {
+  position: absolute;
+  &.active {
+    color: red;
+  }
+}
+
+.list {
+  li {
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.fs {
+  &-small { font-size: 12px; }
+  &-medium { font-size: 14px; }
+  &-large { font-size: 16px; }
+}
+
+
+// 중첩된 속성 -> :
+.box {
+  font: {
+    weight: bold;
+    size: 10px;
+    family: sans-serif;
+  };
+  margin: {
+    top: 10px;
+    left: 20px;
+  };
+  padding: {
+    top: 10px;
+    bottom: 40px;
+    left: 20px;
+    right: 30px;
+  };
+}
+
+
+// 변수(Variables)
+$size: 300px; // -> 전역변수
+
+.container {
+  $size2: 200px; // -> 지역변수
+  position: fixed;
+  top: $size2;
+  .item {
+    $size2: 100px;
+    width: $size;
+    height: $size2; // 재할당이 가능하다. -> 100px
+    transform: translateX(100px);
+  }
+  left: $size2; // 재할당이 되어서 값이 변경되었으므로 100px
+}
+
+.box {
+  width: $size2;  // -> error: 다른 지역의 변수를 참조할 수 없음
+}
+
+
+// 산술 연산
+div {
+  $size: 30px;
+  width: 20px + 20px;
+  height: 40px - 10px;
+  font-size: 10px * 2;
+  margin: $size / 2; // 나누기 연산이 필요할 때는 전체를 소괄호로 감싸거나 변수에 담아 계산하거나 다른 연산자와 같이 쓴다.
+  padding: 20px % 7;
+}
+span {
+  font-size: 10px;
+  line-height: 10px;
+  font-family: serif;
+  font: 10px / 10px serif;  // 단축속성 font: font-size / line-height / font-family -> 값이 필수로 들어가야 해서 잘 안쓰임
+}
+div {
+  width: 100% - 200px;  // error -> calc함수 사용해햐 함
 }
